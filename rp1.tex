@@ -1,0 +1,101 @@
+\documentclass[11pt,twocolumn]{article}
+\usepackage{natbib}
+\bibliographystyle{abbrvnat}
+\setcitestyle{authoryear,open={(},close={)}}
+\title{Machine learning approaches to analysis of terrorist incidents held in electronic open source terrorist databases.}
+\author{Peter Brennan B.Sc, H.Dip.Comp.Sci, M.Sc, Ph.D}
+\setcounter{secnumdepth}{-2}
+\begin{document}
+\maketitle
+\section*{\textbf{Abstract}} 
+Development cycles within the defence and aerospace industry are often characterized by costly over-runs and protracted development times. Examples of these would be the JSF, where the government authority for oversight has attributed severe cost, schedule, and performance problems to this project. Ever changing threat environments can often lead to a change in focus and scope creep and methods of managing working within such a paradigm are at the core of lean/agile software development. 
+The aim of the paper is to review the state of the art of lean/agile development practices within this highly regulated, safety focussed field of aerospace and defence. 
+\\
+The area of study which motivates this research is whether the benefits seen in other domains delivered by lean and agile software development approaches can be achieved  within the aerospace and defence industry. Lean software development can be defined as the use of theories, doctrines and philosophies of lean manufacturing applied to software development. While agile software development refers to a number of practices and philosophies  adhering to the agile manifesto of software development.The aim of the study is to identify the current state of the art regarding the application of lean  and agile software developmental methodologies to the aerospace and defence industry. 
+\\
+The study also aims to describe areas that will aid companies who work within this domain adopt lean/agile software methodologies, particularly continuous certification, continuous tool qualification and narrow slice CORE based development. The research also aims to understand if any cultural barriers or perceived barriers to the adoption of lean/agile methodologies within this sector.While the study is focussed on the aerospace and defence industry the learnings taken from this paper could be applied to other highly regulated safety focussed fields such as biomedical devices or pharmaceuticals.
+\section*{\textbf{Introduction}}
+The phrase lean software developed was first purported to be proposed by Robert Charette in 1993 \citep{kiranproject}, when he used the phrase as in his study exploring superior methods of risk management applied to software projects. The foundations of lean defined by Womack and Jones \citep{womack2010lean}, which are:
+\begin{enumerate}
+\item	Determining what value is for an individual commodity from the point of view of the customer.
+\item	The collation and analysing of all the individual components of the value stream that are required in providing of a product.
+\item  The creation of and efficient flow, through the eradication of un-needed activities in a products value stream. An efficient flow of work is the ease a unit of work travels from end to end through a system. 
+\item Reciprocate in a timely and efficient manner to consumer demand on your product or software.
+\end{enumerate}
+Lean software development is the application of these foundations to software development, which has led to the establishment of a set of values \citep, which are:
+\begin{enumerate}
+\item Realize the importance of people and particular the human condition plays in the software development process.
+\item Agree that complexity and ambiguity are to be expected and therefore the development process must be flexible to adapt to evolving change.
+\item Any lean process should work towards delivering greater value to the customer through delivering of a product at lower cost through the management.
+\item Provide an improved working environment through the creation of a workplace that venerates people.
+\end{enumerate}
+Agile software development refers to a development process that adheres to a set of ideals and philosophies laid out in the Agile Manifesto \citep{beck2001manifesto}. The Agile manifesto at its core:
+\begin{enumerate}
+\item Favours people and processes over tools.
+\item Completed functioning software over complete and inclusive documentation.
+\item Participation and involvement of the customer in the development process over contract negotiation.
+\item The ability to react to change in requirements over the strict adherence to a blueprint.
+\end{enumerate}
+Agile methods \citep{dingsoyr2012decade} can be seen as nurturing of lean software development practices. While lean software \citep{dybaa2008empirical} development process can be seen as enabling agile development methods (by giving a context and unambiguous tools to help enable development), as agile methods contain little ware and therefore yield greater amount of value for the customer \citep{wang2011comparing}.
+\\
+Aerospace and the defence projects are characterized by their high cost, high risk, ever changing requirements, complex bureaucracies and highly regulated environments. Examples of this would be the TSAT, Transformational Satellite communication system \citep{payne2010impact}. Another glaring example would be the Joint Strike Fighter (JSF), whose complex flight control software, which is different depending on the variant of the aircraft (STOVL, CTOL, CV) and has been the main reason for budgets overruns and delays in the aircraft entering service \citep{xia2016optimal}.
+\\
+Partly due to the highly publicised failures of these projects the adoption of lean has been seen as a priority. Through initiatives such as LAI (Lean Aircraft Initiative) have funded policy, research and education into the application of Lean in the aerospace and defence industries \citep{lean1996lean}.  While the impact of Lean has been seen in the defence and aerospace industry, noted examples include reduced cost of C-17 production by Boeing \citep{rebentisch2004lean} and reduced time for production of Atlas launch vehicle by the ULA (United Launch Alliance) \citep{endicott1999space}, relatively few examples of agile or lean software developments in use in the defence and aerospace division. 
+\section*{\textbf{Literature review}}
+Software certification is an integral part of software development involving mission critical software \citep{moy2013testing}. These standards are divided into two separate classes, process based and product based certification \citep{habli2009model}. A process based method (such as DO-178C, MIL-STD-498) is based upon that there is proof that the different activities involved in the development cycle have been carried out successfully. While product based standards such as the UK MOD 00-56 \citep{bowen1993formal} favour a product based approach, where the developer shows evidence for assurance cases regarding the development of the software according to the prescribed system attributes. Process based methods of software certification remain the dominant class of software verification.
+\\
+Agile and lean software development methodologies have been extensively embraced within software development but are often (wrongly) expected to be not appropriate for use in highly regulated environments such as defence, aerospace, medical device and pharma due to supplementary regulatory stipulations on the software \citep{cawley2013lean}.
+\\
+Within the aerospace the DO-178C \citep{tuohey2014lessons} has become the norm for regulating the development of software, having superseded previous standards (in aerospace DO 178 A, B, C). Within the defence industry adoption of MIL-STD-498 \citep{gray1999comparison} (itself developed from the seminal DOD-STD-2167a, DOD-STD-2168, DOD-STD7935a) for the regulation of development of software \citep{sheard2001evolution}. While these regulatory requirements do not impose the implementation of a particular software methodology, they do describe a sequence of steps which do follow a conventional software development plan (i.e. SDLC). The cornerstones of developing in a regulatory environment such as those mentioned previously are:
+\begin{enumerate}
+\item Traceability, this aims to demonstrate the continuity of the development process. 
+\item Compliance, this aims to show that a particular development stage puts carries out what was described in the preceding step.
+\item Independence, verification (the process of assurance of software fulfils all of its projected requirements) of software is carried out by person(s) who do not make up the group of person(s) who developed the software.
+\item Criticality, criticality is the level of importance an end user places upon failures in the correct functioning of a piece of software. 
+\end{enumerate}
+As mentioned previously, most regulatory requirements used in defence and aerospace are process based. That is, they consist of a set of activities and their accompanying objectives, the activities produce outputs which are commonly referred to as artefacts, and these artefacts are then judged by the certification authority to see how they measure up against the accompanying objective associated with the activity \citep{esposito2011investigation}. This has led to the development of an extremely rigid development structure which once an activity has been developed and started it is impossible to alter anything associated with the development cycle. This can lead to what is known as the “Big freeze” problem \citep{cleland2014achieving}.
+\\
+Defence and aviation industries due to their nature are often viewed as conservative and unwilling to change regarding regulatory environment, project green lighting, management style and organizational arrangement \citep{vanderleest2009escape}. Software development often follows a more traditional development approach like waterfall \citep{balaji2012waterfall}.  In fact, regulatory requirements enforced by these industries such as DO-178C and MIL-STD-2167a explicitly state a development process akin to the waterfall model and this development process is still the most used within the industry \citep{boralliapplying}. 
+
+\section*{\textbf{Related research}}
+Placeholder.
+\section*{\textbf{Overview and Analysis}}
+Agile and lean software developmental methods have begun to tackle these cultural challenges to its adoption. For instance, a study carried out by the Israeli defence forces showed that agile methodologies are strongly aligned to the culture of the military, taking XP as an example, XP offers a number of advantages over conventional development software development practices, particularly a maintainable pace and increased "esprit de corps" between the development staff \citep{dubinsky2005agile}. The Italian ministry of defence has found a similar experience in its adoption of agile methodologies and has listed a number of reasons why agile methodologies succeed in defence based software projects \citep{chang2016agile}. These were:
+\begin{enumerate}
+\item The enabling of team members through trust to do the right thing.
+\item The mapping of activities and objectives from agile scrum dashboards. This is a particular benefit especially is highly regulated environments where tools allow the automatic mapping of objectives.
+\item People if given autonomy to carry out their work they will do it to their best.
+\item No additional layers of project management over the scrum team.
+\item Highly capable people are a must. If up-skilling is required this must be included as a user story.
+\item Continuous improvement psychology of the agile team.
+\item Product quality maintained through the use of automated tools which ensure application of coding standards and verify quality of tool.
+\end{enumerate}
+A similar study by the US department of defence came to similar conclusions. That is that agile methods were seen to engage team members and empower them, allow quick changes to changes in the operational and  technological environment along with application of budgetary constraints to a project \citep{lapham2011agile}.
+\section*{\textbf{Discussion}}
+In response to the LAI (Lean aerospace initiative), one of the earliest adopters of agile lean software development within the aerospace and defence industry was LMAS (Lockheed Martin Aeronautical Systems). Lean methodologies where applied to the development of the flight software for the C130-J tactical airlift aircraft \citep{williams2001strategic}. The approach used by LMAS emphasized an agile approach through the use of domain engineering to outline a steady, continuous framework for the problem/solution domains, issues are then placed into sub-domains to ease the process of requirements gathering. The solution is developed in a way that allows the determined, abstraction and appropriation of recurring elements that can be modelled with a DSDL. This permitted the evolution of a “building block” method to be adapted for software element assembly and incorporation of the different elements, thus reducing the chance of errors. The avoidance of unnecessary expenditure in effort is achieved through the repeated use of software components, thus achieving the maximum gain from the work carried out during the project. Through the use of a spiral SDLC and the addition of a pre-emptive development phase referred to as “narrow-slice” \citep{middleton2005lean}. 
+\\
+The narrow-slice is a fully formed and integral piece of a system, working within the boundaries from inputs to the narrow slice to the outputs of the narrow slice \citep{sutton1996lean}. A small elite cadre of skilled experienced developers, prototypes the system, narrow slice by narrow slice, working ahead of the rest of the development team. Essentially this allows this team to reconnoitre the system design and survey it for potential problems that may arise due to inconsistent features of the project, the effectiveness of the development process and architectures used. These “narrow-slice scouts” can quickly identify problems with the design or system and remedial action can be taken.  Quality is attained at every step of the development process through recognized practices as it is created and proper verification methods are used to test that a product does what it is supposed to do \citep{conn2001avionics}. Also all additional releases are tested within a setting which mimics actual operating conditions.
+\\
+Quality function deployment is utilised to give preference to end user requests and project requirements and to empower the development team to show a large amount of “savoir-faire” and have the ability to know how to do the right thing due to the reconnoitre provided by “narrow-slice scouts” \citep{faulk1994experience}. Through the adoption of these practices, Lockheed Martin  have been able to:
+\begin{enumerate}
+\item Lower the build cycle from requirements gathering to finish qualification in 48 hours.
+\item. With software changes mostly following a "right first time, every time" development.
+\item Fewer errors being uncovered during FAA strenuous "rigor" testing.
+\item In summation Lockheed Martin have been to able to build a better and more robust software with reduced cost and risk.
+\end{enumerate}
+Agile methods have been applied to the highly regulated domains particularly in areas of continuous certification and tool certification. Continuous certification is the application of agile methodology to recertify software so to show demonstratable dependability of software in highly regulated domains \citep{Bordin:2011:Online}. Continuous certification involves the automation of local certification tasks such as testing, traceability and software verification. It also involves automated certification upon rebuilding and testing of software. While major changes in requirements are not permitted in the development of safety critical software, changes in functions, ergonomics and architecture are permitted. Agile methodologies have enabled continuous integration through the use of tools which are able to track all parts of the software development cycle that have been affected by the change. This allows the controlling of the traceability of all components affected by a software change. This is important as it overcomes one of the biggest problems caused by the need for certification in highly regulated fields, the “big freeze problem”. 
+\\
+The “big freeze problem", due to the principle within safety critical software that once a software system developed using waterfall model has entered its qualification phase nothing can be changed. This results in what is known as the “big freeze problem”  a period of sustained inaction where if changes are required, the entire process must be restarted again.
+\\ 
+Agile has also been proposed as a means of overcoming the "Big freeze problem" through allowing agile re-qualification and certification of tools \citep{Brogsol:2012:Online}. DO-178C provides (particularly DO-330) \citep{rierson2013developing} advice around the re-qualification of tools. DO-330 \citep{safety.do330} allows reuse of previously qualified tools on a similar project, minor change to the operational environment due to minor changes in the development plans, small change s to the tool itself, provided an impact analysis study has been carried out.  The DO-178C \citep{safety.do178c} standard along with its complimentary software tool qualification concerns document D0-330 describes the process of tool qualification for software development.  D0-178C defines a number of classes of tools, these are:
+\begin{enumerate}
+\item Development tools.
+\item Verification tools.
+\end{enumerate}
+One of the key threats facing software developers operating in this area is the challenge of how to maintain qualification ready tools through the developmental progression of the software. DO-178C and specifically D0-330 allow tool change an qualification to be recorded in a configuration management system  As the CM allows automatic regeneration of qualification data and all artefacts necessary to qualify a tool, the effect of different tools can be carried out.
+\section*{\textbf{Conclusion}}
+While lean and agile methodologies have been adopted widely by software engineering professionals and industry, there use in highly regulated environments like defence or aerospace is perceived as problematic. The reason for this is often cited as the regulatory requirements laid down by these industries and the conservative nature of these entities as to them favouring the use of more traditional software development methodologies. The opposite is in fact true, agile methodologies align very closely with the Military and the flexibility of  agile developmental techniques allows the addressing of some key issues associated with the "big freeze problem" often associated with large complex software development in highly regulated environments.They do this in particular by addressing the problems of continuous certification and continuous tool qualification.
+\\
+Agile methodology has also been successfully deployed within the defence and aerospace industry with dramatic results. Lockheed martins use of lean based "narrow slice" CORE software development methodology resulted in significant increases in added customer value.The main benefits of this approach have included less errors and lower time to build and qualification, in essence delivering a better and more robust software solution at a reduced cost, time-frame and risk to the customer.
+\bibliography{sample}
+\end{document}

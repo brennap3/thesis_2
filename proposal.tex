@@ -1,0 +1,86 @@
+\documentclass[11pt,twocolumn]{article}
+\usepackage{natbib}
+\bibliographystyle{abbrvnat}
+\setcitestyle{authoryear,open={(},close={)}}
+\title{Data mining approaches to analysis of electronic terrorism databases}
+\author{Peter Brennan B.Sc, H.Dip.Comp.Sci, M.Sc, Ph.D}
+\setcounter{secnumdepth}{-2}
+\begin{document}
+\maketitle
+\section*{\textbf{Abstract}} 
+Terrorism's commonly accepted definition is the utilization and/or the perceived menace of violence whose aim is to further a political agenda. Terrorists acts are not a new type of events and can be found to exist all through out history from the Sicarii of Israel who fought the roman empire in the first century, to Guy Fawkes gun powder plot of the 17th century.
+In comparison to other criminal acts (or threats of acts) of violence, terrorism  has a number of unique problems associated with its collection and study, for instance for a long time only international incidents were only recorded as opposed to internal incidents. In response to these challenges open source electronic incident databases have been  which address these problems. These databases bring together data from both domestic and international incidents along with aggregating and cleaning data from a number of pre-existing platforms such as the PGIS (Pinkerton Global Intelligence Services) database.
+\\
+The benefit of electronic terrorist incident databases such as University of Maryland's global terrorist database or the Rand corporations database of terrorist incidents is that they act as enabler of quantitative analysis of these incidents and through combination of other datasets to look at the underlying relationships between terrorist incidents and political stability, location. 
+\section*{\textbf{Introduction}}
+
+While there is no universally agreed definition of terrorism \citep{ruby2002definition}, with various governments, institutions,law enforcement and legal entities having different definitions of terrorism. For instance the U.S department of defence defines terrorism as \citep{pub1998pub}:
+"the unlawful use or the threatened use, of force or violence against individuals or property to coerce and intimidate governments or societies, often to achieve political, religious or ideological objectives"
+While NATO defines terrorism as \citep{chase2013defining}:
+"The unlawful use or threatened use of force or violence against individuals or property in an attempt to coerce or intimidate governments or societies to achieve political, religious or ideological objectives"
+The most commonly agreed tenets of terrorism can be summarized as such:
+\begin{enumerate}
+\item It is the utilization of violence in order to coerce a government into political, religious or ideological shift \citep{chase2013defining}.
+\item It is committed by non-state actors or (in the case of state sponsored terrorism) the indirect or direct usage of a states military or para-military force.
+\item It is aimed at influencing society as a whole besides the immediate victims of an act of terrorism. The immediate victims can be seen as a surrogate for the state, ideology or religion under attack, through the use of media to trumpet their message,\citep{el2014terrorist}.
+\item Another important tenet of terrorism is that when considered in the terms of the  international law  as outlined by the Geneva and Hague conventions are considered to be 'mala prohibita' (a crime that is illegal according to legislation) and 'mala in se' (a crime that is morally wrong), \citep{ganor2002defining}.
+\item 'Jus ad bellum' the idea of a just war, being either legitimized from a  religious or constitutional point of view \citep{kennedy1999one}. 
+\end{enumerate}
+Related to terrorism is insurgencies, insurgencies are rebellions against the current ruling government and as such is a political movement with a specific aim, while terrorism can be seen as a method to obtain the objectives of a political movement. In this way terrorism or other tactics like guerilla warfare can be seen as a supplemental to an insurgency \citep{merari1993terrorism}.
+
+Terrorism is not a new phenomenon and has existed since antiquity, examples of this would be the Sicarii, \citep{smith1995zealots}. The assassins a splinter group of Shia Islam known as the Nizari Ismalis, \citep{daftary1994assassin}, utilised the strategy of liquidation of enemy leaders due to the asymmetric nature of combat the group entered into because of their relative small size of their forces.
+While terrorism in the 20th and 21st century has been heavily influenced by a wide set of causes (from national liberation to religious extremism), pan nationalist terrorist movements dominated by the motivating factor of religious extremism have latterly dominated. The most infamous of these attacks were the September 11th attacks of 2001, which resulted in a total loss of life of 3000 and approximately 10 billion in property and infrastructure damage \citep{brady2015better}. From the Beslan school attacks \citep{moscardino2007narratives} in 2004, to the Mumbai attacks of 2008 \citep{stelter2008citizen} to the San Bernadino attacks of December 2015 \citep{noboa2016violent}, a commonality exists between all these incidents, besides the proliferation of access (legal and illegal) weapons, radical religiosity, one of the most powerful technologies available to terrorists is the ease of communication and particularly the expansion and improvement to the internet. This has allowed the  dissemination of everything from propaganda to aid in the recruitment of volunteers, to the sharing of technical documentation regarding the building of weapons  \citep{warren2008terrorism}.
+\section*{\textbf{Thesis statement}}
+The aim of the thesis is to explore data-mining methodologies and the application and use of electronic terrorist incident databases to the study of terrorism. Data-mining can be defined as the process of analysing data from a number of different aspects and techniques with the purpose of extracting some useful and actionable information from data. There are many data mining application areas supported by algorithmic and non-algorithmic methodologies or techniques which can be used to extract the patterns held within the data. These data mining application areas are \citep{myatt2007making}:
+\begin{enumerate}
+\item Classification. Classification is the practice of developing a model to predict labels for unclassified items so as to mark them as different from other items belonging to a different class. Commonly deployed classification techniques are Random Forests (RF’s) \citep{breiman2001random}, GBM’s (gradient boosted machines) \citep{friedman2001greedy} and decision trees such as CART (Classification and Regression Trees) , C 5.0 \citep{steinberg2009cart}. 
+\item Prediction. Prediction infers numeric values based on patterns held within the data \citep{ledolter2013data}. Typical techniques used to deliver this functionality are regression, specific examples would be the general linear model. Ridge and lasso are regression technique which employ regularization techniques. 
+\item Clustering. Clustering is the partition of data into groups based on the characteristics of the data, with data belonging to each group being similar but not similar to data belonging to other groups or clusters \citep{jain2010data}. Common clustering techniques include hierarchical clustering and K-means clustering.
+\item Outlier detection. Outlier detection is utilized to find datum that show large differences from the overall population in a dataset \citep{hodge2004survey}.
+\item Visualization. This is the act of transforming data into a comprehensible form, through the use of diagrams or pictorial methods to display complex and intricate information or relationships held in data \citep{tufte2006beautiful}. 
+\item Social Network Analysis. Social network analysis examines social connections or associations through the utilization of network theory which uses nodes and edges (links between the nodes) \citep{scott2011social}. Nodes being the actual people in the network with the edges (links) being the relationship or associations between these people.
+\end{enumerate}
+Within the work of the thesis the techniques described above will be used to study in conjunction with electronic terrorism incident databases and ancillary data sources (such as polity) to uncover underlying correlations or trends in the data.      
+\section*{\textbf{Approach technology and methods}}
+The data sources to be used in this study are primarily open electronic terrorist incident databases, these are:
+\begin{enumerate}
+\item The university of Maryland 'Global Terrorism Database (GTD)', this is an open -source data repository holding information on terrorist event from 1970 to the current moment in time. It holds well defined and structured data on both domestic and international terrorist incidents that have occurred and includes over 150,000 incidents, \citep{lafree2007introducing} and \citep{lafree2010global}.
+\item  The 'Big, Allied and Dangerous' (BAAD) database which features a number of current, audited and controlled narrative and relationship data around terrorist organizations.
+\item The 'Nuclear Facility Attack database' NuFAD \citep{NuFADSTART}, which is a global data repository which documents attacks, subversion and unauthorized breaches of nuclear installations.
+\end{enumerate}
+Other ancillary data sources to use in the study include polity \citep{MarshallJaggers2007}, gapminder \citep{rosling2009gapminder}, transparency international \citep{transparency2015corruption} and WEF (World Economic Forum).
+  
+The main technologies that will be used for analysis of the data will be:
+\begin{enumerate}
+\item R, R is a statistical and machine learning programming language \citep{team2015r}, which also offers a broad suite of packages to enable data mining caret \citep{kuhn2015contributions}, visualization ggplot \citep{wickham2016programming},  FactMineR \citep{husson2015r}, t-sne \citep{maaten2008visualizing}, data manipulation dplyr \citep{wickham2015dplyr}, datatable \citep{datatableR} and web scraping rvest \citep{rvestR}.
+\item Python \citep{van2014python} is a popular high level, multi-purpose, interpreted dynamic language which is particularly suited to data science due its design philosophy which stresses meaningfulness and readability and also its wealth of packages that support statistics statsmodels , machine learning scikit \citep{buitinck2013api}, visualization seaborn, mathplotlib \citep{haslwanter2016introduction} and data manipulation pandas \citep{mckinney2015pandas} and numpy \citep{oliphant2014numpy}.
+\item Data visualization tools such as Tableau \citep{chabot2003tableau} and Microsoft PowerBI \citep{ferrari2016introducing}. These tools not only allow the creation of common data visualization but for more exotic data visualizations which are not supported by the above tools they can be integrated with R and Python to create these type of data visualizations, examples of these would be factor plots \citep{husson2010exploratory}. 
+\end{enumerate}
+
+The methodology to be used in the study will be CRISP-DM, \citep{chapman2000crisp}. The aim of the study will be to use the above listed methods, technologies and data-sources to:
+\begin{enumerate}
+\item Gather and collate data from multiple source including scraping data from multiple sources.
+\item Join the data and clean it so as to provision appropriate datasets.
+\item Carry out exploratory data analysis using data-visualizations, summary and simple statistical tests.
+\item Carry out statistical and machine learning analysis on these sources to examine the correlations and statistical inferences drawn from the data under examination.
+\end{enumerate}
+\section*{\textbf{Related research}}
+Data mining has been applied to not only study of terrorism but also to investigative analysis of terrorism. One of the first known instances of this was in West Germany in the 1970's when the German state in the face of dedicated attack by far left terrorist  groups such as the RAF (Red Army Faction) and the red brigades aided and supported by Warsaw Pact countries \citep{leighton2014strange} and the acquiescence of these groups to aid in terrorist attacks by other groups such as Black September
+\citep{nacos2016terrorism}. The West German states adoption of the ideal of militant democracy (streitbare Demokratie), the giving of a comprehensive set of powers to defend a liberal democracy against those who wish to get rid of it and establish a totalitarian state \citep{rosenfeld2014militant}. To lesson the overreaching effects of such sweeping powers the West German state was one of the first to adopt data mining techniques to group or cluster suspected members of terrorist groups so as to aid in targeting the correct group of individuals, through development of dragnet (Rasterfahndung), the integration of data from a number of different data sources to essentially act as  a filter, so as to narrow the number of individuals to investigate \citep{weinhauer2014terror}. This technique had a number of benefits not only to aiding in the investigation but also massive societal benefits, these were:
+\begin{enumerate}
+\item An efficient, targeted search for RAF operatives, which resulted in the defeat, elimination, arrest of the leadership \citep{hauser1997baader} and destruction of the first generation of the RAF \citep{weinhauer2006terrorismus}, though the actions of the RAF did continue up until the early 1990's.
+\item It was a targeted intelligence led investigation, not targeting innocent members of the public, which had been evident in previous uses of the concept of militant democracy, \citep{de2010counter}.
+\end{enumerate}
+Latterly  data mining has been applied to the understanding of the terrorism. In Shakarian's and Stanton's study on modelling behaviour patterns of ISIS, they were able to uncover particular patterns of ISIS's behaviour, not only specific targets that the group favoured but the link between certain attack patterns, for instance they found that an increase in car bomb attacks in Baghdad was correlated with attack by ISIS forces in northern Iraqi cities and this was explained as the car bomb attacks were used to redirect forces away from the front lines were they could be utilized to combat ISIS forces instead were diverted to hunt terrorists in Baghdad \citep{stanton2015mining}.
+\section*{\textbf{Thesis overview}}
+The thesis will take the form of:
+\begin{enumerate}
+\item Chapter 1, will be an introduction to the topic of terrorism and include the following; what defines terrorism, terrorism in an historical context.
+\item Chapter 2, will be an introduction to data and data mining approaches to research in terrorism and in investigation of terrorism.
+\item Chapter 3, will be an introduction to electronic terrorism databases, open and closed, there use in analysis of terrorist incidents.
+\item Chapter 4, will be an exploratory analysis of electronic terrorism databases and ancillary datasets such as polity, transparency international. A number of steps will be carried out in this chapter including exploratory analysis used visualizations, generation of summary statistical data's and statistical hypothesis testing. Other steps involved in this chapter will deal with cleaning and validating data. 
+\item Chapter 5, will address the application of machine learning techniques to the investigation of terrorism incidents.
+\item Chapter 6, will serve as conclusion to the study, detailing both the usefulness of data mining techniques but also any insights uncovered from the analysis.
+\end{enumerate}
+\bibliography{sample}
+\end{document}

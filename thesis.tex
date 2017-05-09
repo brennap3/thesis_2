@@ -1,0 +1,117 @@
+%% thesis.tex 2014/04/11
+%
+% Based on sample files of unknown authorship.
+%
+% The Current Maintainer of this work is Paul Vojta.
+\documentclass[options]{report}
+% \documentclass[masters]{ucbthesis}
+\usepackage{graphicx}
+\usepackage{changepage}
+\usepackage{natbib}
+\usepackage{nameref}
+\usepackage{rotating}
+\usepackage{adjustbox,lipsum}
+\usepackage{array,tabularx}
+\bibliographystyle{abbrvnat}
+\setcitestyle{authoryear,open={(},close={)}}
+
+% To compile this file, run "latex thesis", then "biber thesis"
+% (or "bibtex thesis", if the output from latex asks for that instead),
+% and then "latex thesis" (without the quotes in each case).
+
+% Double spacing, if you want it.  Do not use for the final copy.
+% \def\dsp{\def\baselinestretch{2.0}\large\normalsize}
+% \dsp
+
+% If the Grad. Division insists that the first paragraph of a section
+% be indented (like the others), then include this line:
+\usepackage{indentfirst}
+
+% \newtheorem{theorem}{Jibberish}
+\hyphenation{mar-gin-al-ia}
+\hyphenation{bra-va-do}
+
+\begin{document}
+
+% Declarations for Front Matter
+
+\title{A machine learning approach to the analysis of terrorism}
+\author{Peter Brennan\\ITT\\Department of Computer Science\\M.Sc}
+\date{October 22,2016}
+
+% \degreesemester{Spring}
+% \degreeyear{2017}
+% \degree{M.Sc}
+% \chair{TBH}
+% \othermembers{TBH \\
+%   TBH}
+% \numberofmembers{3}
+% Previous degrees are no longer to be listed on the title page.
+% \prevdegrees{B.A. (University of Northern South Dakota at Hoople) 1978 \\
+%   M.S. (Ed's School of Quantum Mechanics and Muffler Repair) 1989}
+% \field{Computer Science}
+% Designated Emphasis -- this is optional, and rare
+% \emphasis{Colloidal Telemetry}
+% This is optional, and rare
+% \jointinstitution{University of Western Maryland}
+% This is optional
+
+
+% For a masters thesis, replace the above \documentclass line with
+% \documentclass[masters]{ucbthesis}
+% This affects the title and approval pages, which by default calls this
+% document a "dissertation", not a "thesis".
+
+\maketitle
+% Delete (or comment out) the \approvalpage line for the final version.
+% \approvalpage
+% \copyrightpage
+\pagenumbering{roman}
+\include{abstract}
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+%\begin{frontmatter}
+%
+%\begin{dedication}
+%\null\vfil
+%\begin{center}
+%To my parents.
+%\end{center}
+%\vfil\null
+%\end{dedication}
+%
+%% You can delete the \clearpage lines if you don't want these to start on
+%% separate pages.
+%
+%\tableofcontents
+%\clearpage
+%\listoffigures
+%\clearpage
+%\listoftables
+%
+%\begin{acknowledgements}
+%To all who helped me.
+%\end{acknowledgements}
+%
+%\end{frontmatter}
+
+\pagestyle{headings}
+
+
+% (Optional) \part{First Part}
+\pagenumbering{arabic}
+\include{chap1}
+\include{chap2}
+\include{chap3}
+\include{chap4}
+\include{chap5}
+
+% \appendix
+% \chapter{More Monticello Candidates}
+
+
+\bibliography{sample.bib}
+\end{document}
