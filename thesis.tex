@@ -6,6 +6,7 @@
 \documentclass[options]{report}
 % \documentclass[masters]{ucbthesis}
 \usepackage{graphicx}
+\usepackage{listings}
 \usepackage{changepage}
 \usepackage{natbib}
 \usepackage{nameref}
@@ -27,6 +28,7 @@
 % be indented (like the others), then include this line:
 \usepackage{indentfirst}
 
+\usepackage[toc,page]{appendix}
 % \newtheorem{theorem}{Jibberish}
 \hyphenation{mar-gin-al-ia}
 \hyphenation{bra-va-do}
@@ -106,8 +108,14 @@
 \include{chap1}
 \include{chap2}
 \include{chap3}
-\include{chap4}
 \include{chap5}
+\include{chap6}
+\begin{appendices}
+\include{Appendixprelim}
+\include{Appendix1}
+\include{Appendix2}
+\include{Appendix3}
+\end{appendices}
 
 % \appendix
 % \chapter{More Monticello Candidates}

@@ -101,11 +101,11 @@ ggplot(sbsetmideast, aes(x=weekstrdate, y=sum_kill)) +
 
 library(BreakoutDetection)
 
-?breakout
+## ?breakout
 
 str(sbsetmideast)
 
-?breakout
+## ?breakout
 
 subset_models <- sbsetmideast %>%
   group_by(
@@ -128,26 +128,79 @@ head(subset_models_locs)
 
 library(broom)
 
-
 sbsetmideast$country_txt<-droplevels(sbsetmideast$country_txt)
 
+## str(sbsetmideast) str(sbsetmideast$weekstrdate)
+## min.size=4, 
+## method='multi', percent=.2, degree=1
 subset_models <- sbsetmideast %>%
   split(
     .$country_txt
   ) %>%
-  map(~ breakout(.$sum_kill, min.size=12, 
-                    method='multi', percent=.1, degree=1, plot=FALSE)) %>%
+  map(~ breakout(.$sum_kill, min.size=4, 
+                    method='multi', percent=.2, degree=1, plot=FALSE)) %>%
     map("loc")  
 
 
-str(subset_models)
 
-as.data.frame(subset_models)
+## x<-lapply(subset_models, unlist) %>% cbind() ##does not work
 
-sbsetmideast %>%
-  split(
-    .$country_txt
-  ) %>%
-  map(~ breakout(.$sum_kill, min.size=12, 
-                 method='multi', percent=.1, degree=1, plot=FALSE)) %>%
-  map("loc") 
+## subset_models %>% map(unlist) %>% map(simplify2array) %>% as.data.frame() ## does not work
+ ## use a padded data frame
+## https://arxiv.org/pdf/1610.01178.pdf
+## test list of lists to dataframe
+
+na.pad <- function(x,len){
+  x[1:len]
+}
+
+makePaddedDataFrame <- function(l,...){
+  maxlen <- max(sapply(l,length))
+  data.frame(lapply(l,na.pad,len=maxlen),...)
+}
+
+locs.df<-subset_models %>% map(unlist) %>% makePaddedDataFrame() 
+
+str(locs.df)
+
+locs.df[,"Iraq"]
+
+listcountries<-unique(sbsetmideast$country_txt %>% as.character()) 
+
+str(listcountries)
+summary(listcountries)
+
+
+str(country_outbreaks)
+
+pl.holder.dfx<- data.frame()
+
+for(i in listcountries){
+  tsti<-sbsetmideast  %>% filter(country_txt==i)  
+  country_outbreaks<-tsti[locs.df[,i],] %>% filter(!is.na(year))
+  tsti$outbreak<-ifelse(tsti$weekstrdate %in% country_outbreaks$weekstrdate,"outbreak","no outbreak")
+  pl.holder.dfx<-rbind(pl.holder.dfx,tsti)
+  }
+
+
+ggplot(pl.holder.dfx, aes(x=weekstrdate, y=sum_kill)) +
+  geom_line(color = "blue")+geom_text(data=pl.holder.dfx %>% filter(outbreak=="outbreak"),aes(weekstrdate,sum_kill,label="o"))+facet_grid(country_txt ~ .)+
+  ggtitle("Time series outbreak (SURUS) plot of the  \n  number of deaths due to terrorism, \n averaged across all weeks in Iraq, Syria, Yemen, Jordan post Iraq invasion")+
+  xlab("Interval (week) ")+
+  ylab("Number of Deaths")
+
+
+
+str(pl.holder.dfx)
+nrow(pl.holder.dfx)
+
+
+i="Iraq"
+locs.df[,i]
+tsti<-sbsetmideast  %>% filter(country_txt==i) %>% as.data.frame()
+country_outbreaks<-tsti[locs.df[,i],] %>% filter(!is.na(year))
+head(country_outbreaks)
+
+
+
+

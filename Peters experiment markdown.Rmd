@@ -1,0 +1,524 @@
+---
+title: ""
+author: ""
+date: ""
+output:
+  pdf_document:
+   keep_tex: true
+   citation_package: natbib
+  html_document: default
+bibliography: sample.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Packages used in the exploration
+
+We will be using the packages listed below over the course of the experiments.
+
+```{r, echo=TRUE,,message=FALSE }
+library(purrr)
+library(magrittr)
+library(rts)
+library(depmixS4)
+library(TTR)
+library(ggplot2)
+library(reshape2)
+library(gridExtra)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(lubridate)
+library(KMsurv)
+library(tibble)
+library(stringr)
+library(tidyr)
+```
+
+## The evolution of terrorism over time (year and month) by region and world wide figures
+
+Plotting the monthly totals of deaths due to terrorism by region and by world wide figures,we see using these two plots , temporal, regional and regional-temproal relationships emerge. The relationships are shown below:
+
+1. Since records have started to be recorded in 1970, deaths due terrorism is on the rise. From the time series world plot we see that during the 1980's there was a sharp rise in terrorism. This flattened out with end of the cold war and appears to be declining up to the end of 1990's, after September the 11th 2001 there is an increase in terrorism. This increases dramtically with the invasions of Iraq and Afganistan, it increases upto 2007, before sharply rising after 2010.
+
+2. When examining the time series plot by month by region, We see a more refined pattern. We can see the spike in terrorism in the 1980's due to a sharp rise in terrorism in Central America and later in the decade in South America. This fell at the end of the 1980's and start of the 1990's. Terrorism fell accross all regions before beginning to rise in the 2000's especially in sub-saharan Africa, the middle east and North africa and south Asia (particularly Afganistan and Pakistan).
+
+The time series plot for the different regions is shown below. The temporal, regional relationships described above are clearly visible.
+
+```{r , echo=FALSE,message=FALSE, warning=FALSE}
+gti_data<-read.csv("C://Users//Peter//Desktop//gti//globalterrorismdb_0616dist.csv",header=TRUE,sep=",")
+
+
+fatalaties.by.region.month.year<-gti_data %>%
+  group_by(iyear,imonth,region_txt) %>%
+  summarise(num_of_killed = sum(nkill,na.rm=T)) %>% as.data.frame()
+
+fatalaties.by.region.month.year$iyearimonthdt<-
+  ymd(paste(as.character(fatalaties.by.region.month.year$iyear),
+    as.character(fatalaties.by.region.month.year$imonth),"01"))
+
+
+# str(fatalaties.by.region.month.year)
+
+ggplot(fatalaties.by.region.month.year, aes(x=iyearimonthdt, y=num_of_killed,colour=region_txt)) +
+  geom_line()+
+  ggtitle("Time series plot of number of deaths due to terrorism \n by region")+
+  xlab("interval (month)")+
+  ylab("deaths")+ guides(colour=guide_legend(title="Region"))
+
+```
+
+While the world wide time series plot quite clearly shows the rise in terrorism worlwide since 1970. Plotting by region again the specific temporal regional relationships are clearly visible, these are the sharp rise in the 1980's to the start of the 1990's of deaths due to terrorism. Again a regional shift of deaths due to terrorism has shifted to the Middle East, this rose after the September 11th attacks and the subsequent invasions of Afganistan and Pakistan.  
+
+```{r , echo=FALSE,message=FALSE, warning=FALSE}
+fatalaties.by.month.year<-gti_data %>%
+  group_by(iyear,imonth) %>%
+  summarise(num_of_killed = sum(nkill,na.rm=T)) %>% as.data.frame()
+
+fatalaties.by.month.year$iyearimonthdt<-
+  ymd(paste(as.character(fatalaties.by.month.year$iyear),
+            as.character(fatalaties.by.month.year$imonth),"01"))
+
+ggplot(fatalaties.by.month.year, aes(x=iyearimonthdt, y=num_of_killed)) +
+  geom_line()+
+  ggtitle("Time Series plot of \n world wide deaths due to terrorism")+
+  xlab("interval (month)")+
+  ylab("deaths")
+```
+
+## Data displayed as time series by Year
+
+Similarly we can see the global rise in deaths due terrorism  by year since 1970, using a year interval instead of month interval (which was used in the previous plots) . The pattern is even more clearer the time series of deaths by years and deaths by year and region is plotted. The below shot shows the number of deaths globally (not broken out by region). We see a rise in the late 1970's and 1980's which persisted till 2010 followed by a large increase thereafter.
+
+```{r , echo=FALSE,message=FALSE, warning=FALSE}
+##death by year
+
+gti_data$nkill_clean<-coalesce(gti_data$nkill,0)
+
+fatalaties.by.year<-gti_data %>%
+  group_by(iyear) %>%
+  summarise(num_of_killed = sum(nkill_clean,na.rn=T)) %>% as.data.frame()
+
+ggplot(fatalaties.by.year, aes(x=iyear, y=num_of_killed)) +
+  geom_line()+
+  ggtitle("Time series plot deaths due to terrorims\n per year")+
+  xlab("interval")+
+  ylab("deaths")
+```
+
+Now by year and region. A clear pattern emerges the rise in number of deaths due to terrorism in Central America in the 1980's which fell sharply towards the end of the cold war A rise in terrorism is also seen in the 
+
+```{r , echo=FALSE,message=FALSE, warning=FALSE}
+fatalaties.by.year.region<-gti_data %>%
+  group_by(iyear,region_txt) %>%
+  summarise(num_of_killed = sum(nkill_clean,na.rm=T)) %>% as.data.frame()
+
+ggplot(fatalaties.by.year.region, aes(x=iyear, y=num_of_killed,
+                                              colour=region_txt)) +
+  geom_line()+
+  ggtitle("Time series plot of deaths due to terroism \n by year and by region")+
+  xlab("interval")+
+  ylab("deaths")
+```
+
+## Viewing deaths by region and year using stacked bar charts
+
+Now lets look at the data as a stacked bar chart. The stacked bar chart lets us assess the contributing fraction of total deaths for a particular time interval.When viewed as a stacked bar plot (with the region represented as portion of the bar). It is clear to see the fall off in terrororism in South America and Central America, corresponding with a rise in deaths due to terrorism in the Middle East and south Asia. For the last decade the number of deaths that are due to terrorism has been dominated by South Asia, the Middle East and Sub Saharan Africa.
+
+```{r , echo=FALSE,message=FALSE, warning=FALSE}
+
+ggplot(data = fatalaties.by.year.region, aes(x = iyear, y = num_of_killed, fill = region_txt)) + 
+  geom_bar(stat="identity")+
+  ggtitle("Stacked bar plot")+
+  labs(x="year", y="deaths",
+       col="Region")+ guides(fill=guide_legend(title="Region"))
+```
+
+## Viewing deaths by attack vector type 
+
+Examining the plot of deaths due to attack vector (Armed assault, Hijacking, Hostage aking etc) is shown below. Again a temporal relationship exists with since the emergence of bominbgs and explosives as the prominent attack vector. Also the emergence of Hostage taking (Barricade incidents and Kidnapping).
+
+```{r , echo=FALSE,message=FALSE, warning=FALSE}
+
+fatalaties.by.year.AttackType<-gti_data %>%
+  group_by(iyear,attacktype1_txt) %>%
+  summarise(num_of_killed = sum(nkill_clean)) %>% as.data.frame()
+
+str(fatalaties.by.year.AttackType)
+
+ggplot(data = fatalaties.by.year.AttackType, aes(x = iyear, y = num_of_killed, fill = attacktype1_txt)) + 
+  geom_bar(stat="identity")+
+  ggtitle("Stacked bar plot of deaths by attack vector \n by year")+
+  labs(x="interval (year)", y="deaths",
+       col="Attack type")+ guides(fill=guide_legend(title="Attack type"))
+
+```
+
+A similar trend is observed when we just look at the Middle east, with Bombings and exlosions the attack vector that is dominating.
+
+```{r , echo=FALSE,message=FALSE, warning=FALSE}
+
+##by atttack type and by year and filter by region (middle east)
+
+fatalaties.by.year.AttackType.Middleeast<-gti_data %>% filter(region_txt=="Middle East & North Africa") %>%
+  group_by(iyear,attacktype1_txt) %>%
+  summarise(num_of_killed = sum(nkill_clean)) %>% as.data.frame()
+
+##str(fatalaties.by.year.AttackType)
+
+ggplot(data = fatalaties.by.year.AttackType.Middleeast, aes(x = iyear, y = num_of_killed, fill = attacktype1_txt)) + 
+  geom_bar(stat="identity")+
+  ggtitle("Stacked bar plot of deaths by attack vector \n (Middle East only) by year")+
+  labs(x="interval (year)", y="deaths",
+       col="Attack type")+ guides(fill=guide_legend(title="Attack type"))
+```
+
+
+## Viewing deaths by Weapon type
+
+Plotting the data as a stacked bar plot shows similar results to the plot of the stacked bar plot by year of counts of attacks by attack vector. 
+
+```{r , echo=FALSE,message=FALSE, warning=FALSE}
+
+## weaptype1_txt
+
+fatalaties.by.year.weapType<-gti_data %>%
+  group_by(iyear,weaptype1_txt) %>%
+  summarise(num_of_killed = sum(nkill_clean)) %>% as.data.frame()
+
+
+fatalaties.by.year.weapType$weaptype1_txt<-as.character(fatalaties.by.year.weapType$weaptype1_txt)
+
+fatalaties.by.year.weapType$weaptype1_txt<-ifelse(
+  fatalaties.by.year.weapType$weaptype1_txt=='Vehicle (not to include vehicle-borne explosives, i.e., car or truck bombs)',
+       'Vehicle',fatalaties.by.year.weapType$weaptype1_txt)
+
+## head(fatalaties.by.year.weapType$weaptype1_txt,50)
+
+
+## str(fatalaties.by.year.AttackType)
+
+ggplot(data = fatalaties.by.year.weapType, aes(x = iyear, 
+                          y = num_of_killed, fill = weaptype1_txt)) + 
+  geom_bar(stat="identity")+
+  ggtitle("Stacked bar plot of deaths by attack vector \n by year")+
+  labs(x="interval (year)", y="deaths",
+       col="Weapon Type")+ guides(fill=guide_legend(title="weapon type"))
+
+
+```
+
+Looking at just the middle east again we see similar results  to the plot of vector type
+
+## Viewing deaths by group for countries in the middle east using stacked bar charts
+
+
+```{r , echo=FALSE,message=FALSE, warning=FALSE}
+
+```
+
+
+## Viewing deaths by countries in the middle east using stacked bar charts
+
+Plotting the deaths of those killed from terrorism it's quite clear that terrorism was really not a concern until after the invasion in 2003.
+
+```{r , echo=FALSE,message=FALSE, warning=FALSE}
+## Closer look at the middle east
+fatalaties.by.year.iraq<-gti_data %>%
+  filter(country_txt=='Iraq')%>%
+  group_by(iyear) %>%
+  summarise(num_of_killed = sum(nkill_clean,na.rm=T)) %>% as.data.frame()
+
+##
+#
+##
+
+ggplot(data = fatalaties.by.year.iraq, aes(x = iyear, y = num_of_killed)) + 
+  geom_bar(stat="identity")+
+  ggtitle("Number of Deaths due to \n  terrorism in Iraq")+
+  labs(x="year", y="deaths")
+```
+
+## Examining the number of deaths by type.
+
+Syria shows a similar pattern there was a small outbreak of terrorism in 1981 due to the muslim brotherhood rising in 1981.
+
+```{r , echo=FALSE,message=FALSE, warning=FALSE}
+fatalaties.by.year.syria<-gti_data %>%
+  filter(country_txt=='Syria')%>%
+  group_by(iyear) %>%
+  summarise(num_of_killed = sum(nkill_clean)) %>% as.data.frame()
+
+##
+#
+##
+
+ggplot(data = fatalaties.by.year.syria, aes(x = iyear, y = num_of_killed)) + 
+  geom_bar(stat="identity")+
+  ggtitle("Number of Deaths due to\n terrorism Syria \n by year")+
+  labs(x="year", y="deaths")
+```
+
+Looking at Lebanon we can see the deaths due to the cicl war in the 1970's and 1980's however there does apear to be a year on year rise in deaths due to terrorism at the tailend of 2000's.
+
+```{r , echo=FALSE,message=FALSE, warning=FALSE}
+fatalaties.by.year.lebanon<-gti_data %>%
+  filter(country_txt=='Lebanon')%>%
+  group_by(iyear) %>%
+  summarise(num_of_killed = sum(nkill_clean)) %>% as.data.frame()
+
+##
+#
+##
+
+ggplot(data = fatalaties.by.year.lebanon, aes(x = iyear, y = num_of_killed)) + 
+  geom_bar(stat="identity")+
+  ggtitle("Number of Deaths \n due to \n terrorism \n in Lebanon")+
+  labs(x="year", y="deaths")
+
+```
+Similarly Turkey has seen a rise in deaths due to terrorism since the arab spring.
+
+```{r , echo=FALSE,message=FALSE, warning=FALSE}  
+fatalaties.by.year.Turkey<-gti_data %>%
+  filter(country_txt=='Turkey')%>%
+  group_by(iyear) %>%
+  summarise(num_of_killed = sum(nkill_clean)) %>% as.data.frame()
+
+
+
+ggplot(data = fatalaties.by.year.Turkey, aes(x = iyear, y = num_of_killed)) + 
+  geom_bar(stat="identity")+
+  ggtitle("Number of Deaths due to terrorism, \n Turkey")+
+  labs(x="year", y="deaths")
+```
+## Stacked bar plot of counts of deaths by year by country for the middle east
+
+From looking at the whole middle east the number of deaths due to terrorism are increasing and are made up predominatly of fatalities from Iraq, Syria and Yemen.
+
+```{r , echo=FALSE,message=FALSE, warning=FALSE}  
+fatalaties.by.year.middle.east<-gti_data %>%
+    filter(region_txt=='Middle East & North Africa') %>%
+  group_by(iyear,country_txt) %>%
+  summarise(num_of_killed = sum(nkill_clean)) %>% as.data.frame()
+
+###
+#
+###
+
+ggplot(data = fatalaties.by.year.middle.east, aes(x = iyear, y = num_of_killed, fill = country_txt)) + 
+  geom_bar(stat="identity")+
+  ggtitle("Stacked bar plot")+
+  labs(x="year", y="deaths",
+       col="Country")+ guides(fill=guide_legend(title="Country"))
+```
+
+Looking at the average killed per incident per year for Iraq since 2000 we can see a peak around 2007 a fall and then a steady increase since 2011.
+
+```{r , echo=FALSE,message=FALSE, warning=FALSE}  
+iraq.kills.summary <- gti_data %>%
+  filter(country_txt=='Iraq') %>%
+  filter(iyear >= 2000 & iyear <=2015) %>%
+  group_by(iyear) %>%
+  summarize(kills_mean = mean(nkill_clean),
+            kills_se = sqrt(var(nkill_clean)/length(nkill_clean)))
+
+ggplot(iraq.kills.summary, aes(x = factor(iyear), y = kills_mean, fill = factor(iyear))) +  
+  geom_bar(aes(fill = factor(iyear)), stat = "identity") + 
+  geom_errorbar(aes(y = kills_mean, ymin = kills_mean-kills_se, ymax = kills_mean+kills_se), 
+                color = "black", width = 0.4) + 
+  ylim(0, 35) + 
+  theme(legend.position = "none") +
+  ggtitle("Bar graph")
+```  
+
+The daily number of deaths in Iraq due to terrorism since 1975
+
+```{r , echo=FALSE,message=FALSE, warning=FALSE}  
+
+iraq.data<-gti_data %>% filter(country_txt=='Iraq')
+
+iraq.data$idate<-ymd(paste(iraq.data$iyear,str_pad(iraq.data$imonth,2,pad="0"),
+                                  str_pad(iraq.data$iday,2,pad="0")))
+
+c<-seq(ymd('1975-03-01'),ymd('2015-12-31'),by='1 day')
+d<-c(rep(0,times=14916)) %>% as.data.frame()
+d$date<-c
+colnames(d)<-c('count_kills','idate')
+iraq.data<-dplyr::left_join(d, iraq.data, by = "idate")
+iraq.data$nkill<-dplyr::coalesce(iraq.data$nkill,0)
+
+iraq.data.daily<-iraq.data %>% select(idate,nkill) %>% group_by(idate) %>% summarize(sum_kill=sum(nkill)) %>% arrange(idate) %>% as.data.frame()
+
+
+gti_data.clean<-iraq.data.daily %>% filter(!is.na(idate))  %>% as.data.frame()
+
+
+
+ggplot(gti_data.clean, aes(x=idate, y=sum_kill)) +
+  geom_line(color = "blue")+
+  ggtitle("time series plot of the  \n  number of kills, \n averaged across all days (y-axis)")+
+  xlab("Date")+
+  ylab("number of kills")
+```
+
+The daily counts are really interesting as we may be able to model this data using some preliminary methods to get a sense of when the changes and what were the covariates of these events. To do this we use a two techniques Poisson Regression and Hidden markov Models:
+(a) The poisson model as we are modelling count data might be effective at modelling the numbers of dead killed per month and seeing if the different events that took place specifically interventions have an effect on lowering or increasing the death toll due to terrorism.
+(b) Hidden Markov Model might be useful at modelling the transition of Iraq from an era of realtive  peace(low numbers of attack) to era's with high number of terrorist attacks. This change in state from an era of peace to that of outright insurgency would ve very usefull to look at to examine when a particular change occurred. But also from a point of view if seeing if interventions had an effect and when after an intervention.
+
+## Poisson regession
+
+We build a poisson model and a quasi-poisson model, the quasi-poisson model is used as overdispersion of our data is observed in the poisson model. The quasi poisson model did not seem to resolve this issue. But we can see that from the summary table that the Periodsurge, Period,Pre_invasion. We create a categorical variable to describe the period, these are:
+
+1. "01/05/2003", Period=Pre Invasion 
+2. "01/05/2003" to "01/01/2007", Period =Post_Invasion
+3. "01/01/2007" to "31/12/2007", Period =Surge
+4. "01/01/2008" to "31/12/2009", Period =Post Surge
+5. "01/01/2008" to "31/12/2009", Period =Drawdown
+6. "01/01/2010" to "31/12/2012", Period =Pullout
+7.  after "31/12/2012", Period = PostPullout
+
+From the poisson model we can see the residual deviance is lower than the null deviance, however the model does not explain the deviance very well. We do not learn alot from this experiment except that the surge had a positive effect (increased the number killed) on the number of people killed. While the pullout (the period after the surge) saw a significant drop in the number of people killed due to terrorism.
+
+
+```{r , echo=FALSE,message=FALSE, warning=FALSE}  
+###lets try poisson
+# library(dplyr)
+
+iraq.data<- gti_data %>%
+  filter(country_txt=='Iraq')
+
+iraq.data$incident_date<-ymd(paste(iraq.data$iyear,str_pad(iraq.data$imonth,2,pad=0),str_pad(iraq.data$iday,2,pad=0),sep=""))
+##
+
+iraq.data2pre<-iraq.data %>% dplyr::filter(iraq.data$incident_date < dmy("01/05/2003")) %>% mutate(Period="Pre_Invasion") %>% dplyr::select(eventid,Period) %>% merge(iraq.data)
+iraq.data2post<-iraq.data %>% dplyr::filter(iraq.data$incident_date > dmy("01/05/2003") & iraq.data$incident_date < dmy("01/01/2007")) %>% mutate(Period="Post_Invasion") %>% dplyr::select(eventid,Period) %>% merge(iraq.data)
+iraq.data2surge<-iraq.data %>% dplyr::filter(iraq.data$incident_date > dmy("01/01/2007") & iraq.data$incident_date < dmy("31/12/2007")) %>% mutate(Period="Surge") %>% dplyr::select(eventid,Period) %>% merge(iraq.data)
+iraq.data2drawdown<-iraq.data %>% dplyr::filter(iraq.data$incident_date > dmy("01/01/2008") & iraq.data$incident_date < dmy("31/12/2009")) %>% mutate(Period="Drawdown") %>% dplyr::select(eventid,Period) %>% merge(iraq.data)
+iraq.data2pullout<-iraq.data %>% dplyr::filter(iraq.data$incident_date > dmy("01/01/2010") & iraq.data$incident_date < dmy("31/12/2012")) %>% mutate(Period="Pullout") %>% dplyr::select(eventid,Period) %>% merge(iraq.data)
+iraq.data2postpullout<-iraq.data %>% dplyr::filter(iraq.data$incident_date > dmy("31/12/2012")) %>% mutate(Period="PostPullout") %>% dplyr::select(eventid,Period) %>% merge(iraq.data)
+iraq.data3<-rbind(iraq.data2pre,iraq.data2post,iraq.data2surge,iraq.data2drawdown,iraq.data2pullout,iraq.data2postpullout)
+# iraq.data3$incident_date[1]
+
+iraq.data3$month_since_1970<-month(as.period(interval(iraq.data3$incident_date[1],iraq.data3$incident_date),unit="month"))
+
+# head(month(iraq.data3$incident_date))
+
+
+iraq.kills.summary.period <- iraq.data3 %>%
+  group_by(month_since_1970,Period) %>%
+  summarize(kills_sum = sum(nkill,na.rm=T)) %>% ungroup
+
+# str(iraq.kills.summary.period)
+
+iraq.kills.summary.period$kills_sum<-coalesce(iraq.kills.summary.period$kills_sum,0)
+
+# head(iraq.kills.summary.period)
+
+
+glmpoisson.iraq<-glm(kills_sum~.,data=iraq.kills.summary.period,family="poisson")
+glmpoisson2.iraq<-glm(kills_sum~Period+month_since_1970+I(month_since_1970^2),data=iraq.kills.summary.period,family="poisson")
+summary(glmpoisson.iraq)
+# 1 - (19330/41600)
+glmquasipoisson.iraq<-glm(kills_sum~.,data=iraq.kills.summary.period,family="quasipoisson")
+summary(glmquasipoisson.iraq)
+# 1 -(19329/41596)
+
+
+# col
+
+predquasipois<-predict(glmquasipoisson.iraq,iraq.kills.summary.period,type="response")
+predpois<-predict(glmpoisson.iraq,iraq.kills.summary.period,type="response")
+
+predpois2<-predict(glmpoisson2.iraq,iraq.kills.summary.period,type="response")
+
+iraq.kills.summary.period<-cbind(iraq.kills.summary.period,predquasipois,predpois)
+colnames(iraq.kills.summary.period)<-c("Months","Period","kills","predquas","predpois")
+
+# col
+# head(iraq.kills.summary.period)
+
+```
+
+The plot of the predicted versus the actuals is shown below:
+
+```{r , echo=FALSE,message=FALSE, warning=FALSE}  
+ggplot(iraq.kills.summary.period, aes(Months)) + 
+  geom_line(aes(y = kills, colour = "kills")) + 
+  geom_line(aes(y = predpois, colour = "predpois"))+
+  ggtitle("Kills (due to  terrorism)  actual and \n predicted versus month for poison models")+
+  xlab("Month since 1976")+
+  ylab("Kills due \n to terrorism")
+
+```
+
+As we are seeing an increase incounts of deaths over time it may make sense to model this as a quadratic effect we do this below and we see and plot the results, doing so we see from the graph no better fit and also the model remins massively overdispersed.
+
+```{r , echo=FALSE,message=FALSE, warning=FALSE}  
+iraq.kills.summary.period<-cbind(iraq.kills.summary.period,predquasipois,predpois2)
+
+ggplot(iraq.kills.summary.period, aes(Months)) + 
+  geom_line(aes(y = kills, colour = "kills")) + 
+  geom_line(aes(y = predpois, colour = "predpois2"))+
+  geom_line(aes(y = predpois, colour = "predpois"))+
+  ggtitle("Kills (due to  terrorism)  actual and \n predicted versus month for poison models")+
+  xlab("Month since 1976")+
+  ylab("Kills due \n to terrorism")
+summary(glmquasipoisson.iraq)
+```
+
+The summary of the poisson model is shown below:
+
+```{r , echo=FALSE,message=FALSE, warning=FALSE}  
+summary(glmquasipoisson.iraq)
+```
+
+##Hiden Markov Models
+
+Hidden markov models are often used to model for time regime detection and shifts in these regimes. HMM's are a probalistic process which examine the current state along a timeline to make a prediction about the next state. We use a two state and a three state HMM to model.
+
+The two state model output is shown below. the summary of the model output can be seen.
+```{r , echo=FALSE,message=FALSE, warning=FALSE}  
+iraq.data<-gti_data %>% filter(country_txt=='Iraq')
+
+iraq.data$idate<-ymd(paste(iraq.data$iyear,str_pad(iraq.data$imonth,2,pad="0"),
+                                  str_pad(iraq.data$iday,2,pad="0")))
+
+iraq.data.daily<-iraq.data %>% select(idate,nkill) %>% group_by(idate) %>% summarize(sum_kill=sum(nkill)) %>% arrange(idate) %>% as.data.frame()
+
+
+iraq_data.clean<-iraq.data.daily %>% filter(!is.na(idate))  %>% as.data.frame()
+
+##Na's mean no deaths so change the NA's to 0
+iraq_data.clean$sum_kill<-coalesce(iraq_data.clean$sum_kill,0)
+
+##
+##
+#
+##
+##
+set.seed(1)
+mod <- depmix(sum_kill ~ 1, family = gaussian(), nstates = 2, data = iraq_data.clean)
+fm2 <- fit(mod, verbose = TRUE)
+summary(fm2, which="response")
+
+# Classification (inference task)
+probs <- posterior(fm2)             # Compute probability of being in each state
+head(probs)
+head(iraq_data.clean)
+nrow(probs)
+nrow(iraq_data.clean)
+rowSums(head(probs)[,2:3])          # Check that probabilities sum to 1
+
+pS2 <- probs[,3]                  # Pick out the "terror" state
+pS1 <- probs[,2]                  # Pick out the "terror" state
+iraq_data.clean$ps2<-pS2 
+iraq_data.clean$ps1<-pS1 
+# colnames(iraq_data.clean)
+df <- melt(iraq_data.clean,id="idate",measure=c("sum_kill","ps1","ps2"))
+```
+
+
+we now plot the data to get an idea of the times were 
