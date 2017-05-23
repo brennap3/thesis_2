@@ -33,14 +33,19 @@
 % \newtheorem{theorem}{Jibberish}
 \hyphenation{mar-gin-al-ia}
 \hyphenation{bra-va-do}
+\usepackage{fancyhdr} 
+\fancyhf{}
+
+
+
 
 \begin{document}
 
 % Declarations for Front Matter
 
-\title{A machine learning approach to the analysis of terrorism}
-\author{Peter Brennan\\ITT\\Department of Computer Science\\M.Sc}
-\date{October 22,2016}
+\title{The detection of outbreaks in terrorist incidents using time series anomaly detection methods}
+\author{Dr Peter Brennan\\Department of Computer Science\\"being a thesis presented for the award of Master Of Science degree"\\Supervisor Dr John Burns\\ITT, Tallaght, Dublin 24}
+\date{May 22,2016}
 
 % \degreesemester{Spring}
 % \degreeyear{2017}
@@ -71,6 +76,9 @@
 % \copyrightpage
 \pagenumbering{roman}
 \include{abstract}
+\include{declaration}
+\include{credits}
+
 
 \tableofcontents
 \listoffigures
@@ -102,6 +110,11 @@
 %\end{frontmatter}
 
 \pagestyle{headings}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\lhead{\leftmark}
+\cfoot{\thepage}
+\pagestyle{fancy} 
 
 
 % (Optional) \part{First Part}
@@ -111,16 +124,14 @@
 \include{chap3}
 \include{chap5}
 \include{chap6}
+
+% \appendix
+% \chapter{More Monticello Candidates}
+\bibliography{sample.bib}
 \begin{appendices}
 \include{Appendixprelim}
 \include{Appendix1}
 \include{Appendix2}
 \include{Appendix3}
 \end{appendices}
-
-% \appendix
-% \chapter{More Monticello Candidates}
-
-
-\bibliography{sample.bib}
 \end{document}
